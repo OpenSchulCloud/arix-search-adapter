@@ -1,0 +1,72 @@
+<result>
+	<r identifier="SF-56395">
+<f n="licence">ndr-</f>
+		<f n="text">Auf seinem bekanntesten Foto streckt Albert Einstein dem Fotografen die Zunge raus und ist damit zur Ikone der Pop-Kultur geworden, später kopiert von den Rolling-Stones und Kiss-Bassist Gene Simmons. Aber was für ein Mensch war Einstein? Und warum ist er so berühmt geworden? ä10 Dinge, die du wissen musst! Albert Einstein unternimmt eine Reise durch Zeit und Raum und klärt unter anderem folgende Fragen:~br&gt;~br&gt;Hat Einstein sieben Jahre lang als Schuster gearbeitet?~br&gt;~br&gt;Als er im schweizerischen Bern lebte, sprach Albert Einstein von seiner Tagesbeschäftigung als äSchusterarbeit. Aber hat der später weltberühmte Physiker tatsächlich sieben Jahre lang Schuhe zusammengenagelt? Die Geschichte klingt plausibel durch die oft zitierte Tatsache, dass Einstein auf dem Gymnasium eine sechs in Mathe und Physik hat. Erst im zweiten Anlauf wird er an der Universität aufgenommen, und noch drei Jahre vor der Veröffentlichung seiner Relativitätstheorie sucht er mit Gratis-Probestunden verzweifelt Nachhilfeschüler, um seine Miete zahlen zu können. Aber war Einstein wirklich ein schlechter Schüler oder einfach seiner Zeit voraus? ~br&gt;~br&gt;Einstein suchte vergeblich die Weltformel!~br&gt;~br&gt;So unglaublich es klingt, aber Albert Einstein hat für seine Relativitätstheorie nicht den Nobelpreis bekommen. 1905 sorgte sie für Aufsehen in der Fachwelt, aber das Nobelpreiskomitee war sich 1921 immer noch zu unsicher und gab Einstein die Auszeichnung lieber für eine andere wissenschaftliche Arbeit. Dabei hatten die Juroren die Qual der Wahl. Schließlich entschieden sie sich für eine Arbeit Einsteins über Licht-Teilchen. Mit ihr hatte Einstein die zweite große Physik-Revolution zu Beginn des 20. Jahrhunderts angestoßen: die Entwicklung der Quantentheorie. Sie versucht die Vorgänge auf der Ebene von Atomen, Elektronen und noch kleineren Teilchen zu verstehen. Sie ist die Grundlage für unsere Digitalkameras, Laser oder Computer. Aber sie widerspricht der Relativitätstheorie. Einstein arbeitet   e sich die letzten 30 Jahre seines Lebens daran ab, beide Theorien zu einer alles erklärenden äWeltformel zu vereinen. Er scheiterte daran und bis heute suchen die Physiker vergeblich nach ihr.~br&gt;~br&gt;~br&gt;Hat Einstein die Atombombe gebaut?~br&gt;~br&gt;Mit der berühmtesten Formel der Welt äe=mc2 legte Einstein eine der Grundlagen für die Gewinnung von Energie aus der Atomspaltung. Dabei verschwindet Masse und wird in gewaltig viel Energie umgewandelt. Gewaltig viel Energie, denn die Formel lautet ausgesprochen: äEnergie gleich Masse mal Lichtgeschwindigkeit. Wenn man weiß, dass Licht mit unglaublichen 1 Milliarde Kilometer pro Stunde unterwegs ist, wird einem klar, welche Mengen an Energie bei der Umwandlung von Materie, wie etwa in einer Atombombenexplosion, freigesetzt werden. Aber stimmt es, dass ohne Einstein die Atombombe nicht möglich gewesen wäre? Und was genau schrieb Einstein an Roosevelt, den amerikanischen Präsidenten, der Hitler-Deutschland den Krieg erklärte? Rief der überzeugte Pazifist Einstein wirklich zum Bau der Atombombe auf?</f>
+		<f n="titel">Albert Einstein  (HD)</f>
+		<f n="typ">49</f>
+		<f n="laenge">30 Min</f>
+	</r>
+	<r identifier="SF-17335">
+<f n="licence">ndr-</f>
+		<f n="text">"Was würde geschehen, wenn ich hinter einem Lichtstrahl hereilen und ihn schließlich einholen würde?" Diesen Gedanken stellt sich ein 17-jähriger Junge, der gerade seine Schule verlassen hat. Einige Jahr später vollendet er den Gedankengang und verändert damit nicht nur unsere Vorstellungen von Raum und Zeit, sondern die des ganzen Universums. Es ist die wohl berühmteste Formel der Welt: E=mc². Zeit ist für Albert Einstein keine unveränderliche Größe, sie ist abhängig davon, ob und mit welcher Geschwindigkeit sich ein System im Raum bewegt. Die Relativitätstheorie des Albert Einstein impliziert ein neues Konzept von Raum und Zeit, in dem er eine Verknüpfung herstellt zwischen den bis dahin separat erscheinenden Begriffen von Raum und Zeit. Ein Konzept, das die klassische Physik in ihren Grundfesten erschüttert.</f>
+		<f n="titel">Albert Einstein - E=m*c²</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-49521">
+<f n="licence">ndr-</f>
+		<f n="text">Informationen zum Thema, Einsatz im Unterricht, Quiz und Arbeitsblätter mit Lösungen</f>
+		<f n="titel">Albert Einstein - Porträt eines Genies - Unterrichtsmaterial</f>
+		<f n="typ">79</f>
+		<f n="laenge">ca. 13 Min</f>
+	</r>
+	<r identifier="SF-52309">
+<f n="licence">ndr-</f>
+		<f n="text">"Wenn man zwei Stunden mit einem netten Mädchen zusammensitzt, meint man, es wäre eine Minute. Sitzt man jedoch eine Minute auf einem heißen Ofen, meint man, es wären zwei Stunden. Das ist Relativität" - so kurz und prägnant kann nur der Meister selbst die Relativität erklären: Albert Einstein  Genie, Institution, Weltenbürger und Begründer eines neuen physikalischen Weltbildes. Seine Formel e=mc² ist die berühmteste Formel der Welt  was sie aber genau bedeutet, erschließt sich nur den Wenigsten.~br&gt;~br&gt;Lesch erklärt Einstein~br&gt;Einen gibt es, der Einsteins berühmte Formel erklären kann: Harald Lesch - alpha-Zuschauern seit Jahren bekannt als der Mann, der schwierige physikalische Zusammenhänge witzig, fundiert und unterhaltend über den Bildschirm bringt. Harald Lesch erklärt in acht Folgen die Physik Albert Einsteins  vom Photoeffekt über Schwarze Löcher, Gravitationslinien bis hin zur Bedeutung, die Einsteins Erkenntnisse für unser heutiges Leben haben.</f>
+		<f n="titel">Das schwarze Loch</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52146">
+<f n="licence">ndr-</f>
+		<f n="text">Wir schreiben das Jahr 2205: Albert Einsteins Relativitätstheorie wird 300 Jahre alt. Sein Todestag jährt sich zum 250. Mal. Dr. Schneller und Dr. Mayer - zwei Wissenschaftler aus der Zukunft - recherchieren das Leben und das Werk von Albert Einstein. Frau Dr. Schneller reist zurück in die Vergangenheit und trifft das Genie des 20. Jahrhunderts dort persönlich. Denn Zeitreisen sind möglich im Jahr 2205. "Das Einstein-Projekt" ist eine fantasievolle und unterhaltsame sechsteilige Serie, die über den Umweg in die Zukunft das vergangene Leben des großen Physikers und Nobelpreisträgers Albert Einstein in unsere Gegenwart transportiert. Die damalige Zeit und die Person Albert Einstein werden durch diese ungewöhnliche und spannende Mixtur von Spielszenen und Originalmaterial greifbar und lebendig.</f>
+		<f n="titel">Das Wunderjahr</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52292">
+<f n="licence">ndr-</f>
+		<f n="text">"Wenn man zwei Stunden mit einem netten Mädchen zusammensitzt, meint man, es wäre eine Minute. Sitzt man jedoch eine Minute auf einem heißen Ofen, meint man, es wären zwei Stunden. Das ist Relativität" - so kurz und prägnant kann nur der Meister selbst die Relativität erklären: Albert Einstein  Genie, Institution, Weltenbürger und Begründer eines neuen physikalischen Weltbildes. Seine Formel e=mc² ist die berühmteste Formel der Welt  was sie aber genau bedeutet, erschließt sich nur den Wenigsten.~br&gt;~br&gt;Lesch erklärt Einstein~br&gt;Einen gibt es, der Einsteins berühmte Formel erklären kann: Harald Lesch - alpha-Zuschauern seit Jahren bekannt als der Mann, der schwierige physikalische Zusammenhänge witzig, fundiert und unterhaltend über den Bildschirm bringt. Harald Lesch erklärt in acht Folgen die Physik Albert Einsteins  vom Photoeffekt über Schwarze Löcher, Gravitationslinien bis hin zur Bedeutung, die Einsteins Erkenntnisse für unser heutiges Leben haben.</f>
+		<f n="titel">Der Photoeffekt</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52293">
+<f n="licence">ndr-</f>
+		<f n="text">"Wenn man zwei Stunden mit einem netten Mädchen zusammensitzt, meint man, es wäre eine Minute. Sitzt man jedoch eine Minute auf einem heißen Ofen, meint man, es wären zwei Stunden. Das ist Relativität" - so kurz und prägnant kann nur der Meister selbst die Relativität erklären: Albert Einstein  Genie, Institution, Weltenbürger und Begründer eines neuen physikalischen Weltbildes. Seine Formel e=mc² ist die berühmteste Formel der Welt  was sie aber genau bedeutet, erschließt sich nur den Wenigsten.~br&gt;~br&gt;Lesch erklärt Einstein~br&gt;Einen gibt es, der Einsteins berühmte Formel erklären kann: Harald Lesch - alpha-Zuschauern seit Jahren bekannt als der Mann, der schwierige physikalische Zusammenhänge witzig, fundiert und unterhaltend über den Bildschirm bringt. Harald Lesch erklärt in acht Folgen die Physik Albert Einsteins  vom Photoeffekt über Schwarze Löcher, Gravitationslinien bis hin zur Bedeutung, die Einsteins Erkenntnisse für unser heutiges Leben haben.</f>
+		<f n="titel">Der Äther</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52145">
+<f n="licence">ndr-</f>
+		<f n="text">Wir schreiben das Jahr 2205: Albert Einsteins Relativitätstheorie wird 300 Jahre alt. Sein Todestag jährt sich zum 250. Mal. Dr. Schneller und Dr. Mayer - zwei Wissenschaftler aus der Zukunft - recherchieren das Leben und das Werk von Albert Einstein. Frau Dr. Schneller reist zurück in die Vergangenheit und trifft das Genie des 20. Jahrhunderts dort persönlich. Denn Zeitreisen sind möglich im Jahr 2205. "Das Einstein-Projekt" ist eine fantasievolle und unterhaltsame sechsteilige Serie, die über den Umweg in die Zukunft das vergangene Leben des großen Physikers und Nobelpreisträgers Albert Einstein in unsere Gegenwart transportiert. Die damalige Zeit und die Person Albert Einstein werden durch diese ungewöhnliche und spannende Mixtur von Spielszenen und Originalmaterial greifbar und lebendig.</f>
+		<f n="titel">Die frühen Jahre</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52370">
+<f n="licence">ndr-</f>
+		<f n="text">"Wenn man zwei Stunden mit einem netten Mädchen zusammensitzt, meint man, es wäre eine Minute. Sitzt man jedoch eine Minute auf einem heißen Ofen, meint man, es wären zwei Stunden. Das ist Relativität" - so kurz und prägnant kann nur der Meister selbst die Relativität erklären: Albert Einstein  Genie, Institution, Weltenbürger und Begründer eines neuen physikalischen Weltbildes. Seine Formel e=mc² ist die berühmteste Formel der Welt  was sie aber genau bedeutet, erschließt sich nur den Wenigsten.~br&gt;~br&gt;Lesch erklärt Einstein~br&gt;Einen gibt es, der Einsteins berühmte Formel erklären kann: Harald Lesch - alpha-Zuschauern seit Jahren bekannt als der Mann, der schwierige physikalische Zusammenhänge witzig, fundiert und unterhaltend über den Bildschirm bringt. Harald Lesch erklärt in acht Folgen die Physik Albert Einsteins  vom Photoeffekt über Schwarze Löcher, Gravitationslinien bis hin zur Bedeutung, die Einsteins Erkenntnisse für unser heutiges Leben haben.</f>
+		<f n="titel">Die Gravitationslinsen</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+	<r identifier="SF-52373">
+<f n="licence">ndr-</f>
+		<f n="text">"Wenn man zwei Stunden mit einem netten Mädchen zusammensitzt, meint man, es wäre eine Minute. Sitzt man jedoch eine Minute auf einem heißen Ofen, meint man, es wären zwei Stunden. Das ist Relativität" - so kurz und prägnant kann nur der Meister selbst die Relativität erklären: Albert Einstein  Genie, Institution, Weltenbürger und Begründer eines neuen physikalischen Weltbildes. Seine Formel e=mc² ist die berühmteste Formel der Welt  was sie aber genau bedeutet, erschließt sich nur den Wenigsten.~br&gt;~br&gt;Lesch erklärt Einstein~br&gt;Einen gibt es, der Einsteins berühmte Formel erklären kann: Harald Lesch - alpha-Zuschauern seit Jahren bekannt als der Mann, der schwierige physikalische Zusammenhänge witzig, fundiert und unterhaltend über den Bildschirm bringt. Harald Lesch erklärt in acht Folgen die Physik Albert Einsteins  vom Photoeffekt über Schwarze Löcher, Gravitationslinien bis hin zur Bedeutung, die Einsteins Erkenntnisse für unser heutiges Leben haben.</f>
+		<f n="titel">Die Kosmologie</f>
+		<f n="typ">49</f>
+		<f n="laenge">15 Min</f>
+	</r>
+</result>

@@ -46,7 +46,7 @@ func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
 		fmt.Printf("error: %v", err)
 		return LinkRequest{notch:notch, secret:[]byte(secret)}
 	}
-  fmt.Printf("notch: %#v <- %s\n", notch, notch_response)
+  //fmt.Printf("notch: %#v <- %s\n", notch, notch_response)
 	return LinkRequest{notch:notch, secret:[]byte(secret)}
 }
 

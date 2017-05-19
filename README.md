@@ -9,8 +9,11 @@ Setup
 Install Go.
 - [Windows][setup-tut]
 
-
-
+Testing
+- https://github.com/stretchr/testify
+```
+go get github.com/stretchr/testify/assert
+```
 
 
 

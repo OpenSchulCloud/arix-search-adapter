@@ -1,8 +1,18 @@
 package arix
 
-import "testing"
+import (
+  "testing"
+  "github.com/stretchr/testify/assert"
+  "github.com/stretchr/testify/require"
+  "os"
+)
 
-func TestGenerateNodge(t *testing.T) {
+
+/* Test that the program can generate a link response from the different notches using a secret.
+ *
+ *
+ */
+func TestGenerateNotchLinkResponse(t *testing.T) {
 	for _, c := range []struct {
 		notch, secret, want string
 	}{
@@ -21,8 +31,34 @@ func TestGenerateNodge(t *testing.T) {
     }, 
 	} {
 		got := NotchToLinkRequest([]byte(c.notch), c.secret).String()
-		if got != c.want {
-			t.Errorf("NotchToLinkRequest(%q, %q) == %q, want %q", c.notch, c.secret, got, c.want)
-		}
+		assert.Equal(t, got, c.want)
 	}
+}
+
+func GetResultFromFile(file_name string) SearchResult {
+  fi, err := os.Open(file_name)
+  if err != nil {
+      panic(err)
+  }
+  // close fi on exit and check for its returned error
+  defer func() {
+      if err := fi.Close(); err != nil {
+          panic(err)
+      }
+  }()
+  return ParseSearchResult(fi)
+}
+
+
+func TestParseResults(t *testing.T) {
+  assert := assert.New(t)
+  require := require.New(t)
+  result := GetResultFromFile("parse_test_result.txt")
+  require.Equal(10, len(result.Resources))
+  assert.Equal("SF-56395", result.Resources[0].Id)
+  assert.Equal("SF-52309", result.Resources[3].Id)
+  assert.Equal("SF-52146", result.Resources[4].Id)
+  assert.Equal("SF-52373", result.Resources[9].Id)
+  
+  assert.Equal("Albert Einstein  (HD)", result.Resources[0].Title)
 }
