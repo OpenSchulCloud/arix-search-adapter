@@ -14,7 +14,7 @@ type Field struct {
   Value string `xml:",innerxml"`
 }
 
-type Resource struct {
+type ArixResource struct {
   Id     string   `xml:"identifier,attr"`
   Fields []Field  `xml:"f"`
   Title  string   `xml:"-"`
@@ -22,7 +22,7 @@ type Resource struct {
 
 
 type SearchResult struct {
-  Resources []Resource `xml:"r"`
+  Resources []ArixResource `xml:"r"`
 }
 
 
