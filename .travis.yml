@@ -5,7 +5,7 @@ go:
   - 1.8
 
 before_install:
-  - go get -u -t ./...
+  - go get -u -t ./arix
 
 script:
   - go test ./arix
