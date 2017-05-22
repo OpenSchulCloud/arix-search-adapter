@@ -1,7 +1,7 @@
 ARIX-search-adapter
 ===================
 
-
+[![Build Status](https://travis-ci.org/schul-cloud/arix-search-adapter.svg?branch=master)](https://travis-ci.org/schul-cloud/arix-search-adapter)
 
 Setup
 -----
