@@ -17,9 +17,10 @@ type LearningResource struct {
   Title            string
   Description      string
   Url              string
-  License          []License
+  Licenses         []License
   MimeType         string
   ContentCategory  string
   Languages        []string
+  Thumbnail        string
 }
 
