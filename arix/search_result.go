@@ -26,23 +26,26 @@ type SearchResult struct {
 }
 
 
-func ParseSearchResult(source io.Reader) SearchResult {
+func ParseSearchResult(source io.Reader) []LearningResource {
   decoder := xml.NewDecoder(source)
+  var resources = []LearningResource{}
   search_result := SearchResult{}
   err := decoder.Decode(&search_result)
 	if err != nil {
 		fmt.Printf("error: %v", err)
-		return SearchResult{}
+		return []LearningResource{}
 	}
   for i, _ := range search_result.Resources {
-    resource := &search_result.Resources[i] // http://stackoverflow.com/questions/20185511/golang-range-references-instead-values#comment47156406_29498133
-    for _, field := range resource.Fields {
+    res1 := &search_result.Resources[i] // http://stackoverflow.com/questions/20185511/golang-range-references-instead-values#comment47156406_29498133
+    var res2 LearningResource
+    res2.Id = res1.Id
+    for _, field := range res1.Fields {
       switch field.Name {
         case "titel":
-          resource.Title = field.Value
+          res2.Title = field.Value
       }
     }
-    resource.Fields = nil // delete unused fields
+    resources = append(resources, res2)
   }
-	return search_result
+	return resources
 }

@@ -35,7 +35,7 @@ func TestGenerateNotchLinkResponse(t *testing.T) {
 	}
 }
 
-func GetResultFromFile(file_name string) SearchResult {
+func GetResultFromFile(file_name string) []LearningResource {
   fi, err := os.Open(file_name)
   if err != nil {
       panic(err)
@@ -53,12 +53,12 @@ func GetResultFromFile(file_name string) SearchResult {
 func TestParseResults(t *testing.T) {
   assert := assert.New(t)
   require := require.New(t)
-  result := GetResultFromFile("parse_test_result.txt")
-  require.Equal(10, len(result.Resources))
-  assert.Equal("SF-56395", result.Resources[0].Id)
-  assert.Equal("SF-52309", result.Resources[3].Id)
-  assert.Equal("SF-52146", result.Resources[4].Id)
-  assert.Equal("SF-52373", result.Resources[9].Id)
+  resources := GetResultFromFile("parse_test_result.txt")
+  require.Equal(10, len(resources))
+  assert.Equal("SF-56395", resources[0].Id)
+  assert.Equal("SF-52309", resources[3].Id)
+  assert.Equal("SF-52146", resources[4].Id)
+  assert.Equal("SF-52373", resources[9].Id)
   
-  assert.Equal("Albert Einstein  (HD)", result.Resources[0].Title)
+  assert.Equal("Albert Einstein  (HD)", resources[0].Title)
 }

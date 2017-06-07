@@ -14,6 +14,7 @@ type License struct {
 }
 
 type LearningResource struct {
+  Id               string
   Title            string
   Description      string
   Url              string

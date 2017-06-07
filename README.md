@@ -26,6 +26,10 @@ Test this code
 go test github.com/schul-cloud/arix-search-adapter/arix
 ```
 
+Run the search engine server
+```
+go build github.com/schul-cloud/arix-search-adapter/search && search
+```
 
 
 [setup-tut]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
