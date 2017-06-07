@@ -3,6 +3,7 @@ ARIX-search-adapter
 
 [![Build Status](https://travis-ci.org/schul-cloud/arix-search-adapter.svg?branch=master)](https://travis-ci.org/schul-cloud/arix-search-adapter)
 
+
 Setup
 -----
 
@@ -13,6 +14,16 @@ Testing
 - https://github.com/stretchr/testify
 ```
 go get github.com/stretchr/testify/assert
+```
+
+This code
+```
+go get go test github.com/schul-cloud/arix-search-adapter
+```
+
+Test this code
+```
+go test github.com/schul-cloud/arix-search-adapter/arix
 ```
 
 
