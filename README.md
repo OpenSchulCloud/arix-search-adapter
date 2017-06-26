@@ -8,7 +8,8 @@ Setup
 -----
 
 Install Go.
-- [Windows][setup-tut]
+- [Windows][setup-windows]
+- [Ubuntu][setup-ubuntu]
 
 Testing
 - https://github.com/stretchr/testify
@@ -32,4 +33,5 @@ go build github.com/schul-cloud/arix-search-adapter/search && search
 ```
 
 
-[setup-tut]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
+[setup-windows]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
+[setup-ubuntu]: https://wiki.ubuntu.com/Go
