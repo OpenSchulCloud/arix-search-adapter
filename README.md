@@ -19,7 +19,7 @@ go get github.com/stretchr/testify/assert
 
 This code
 ```
-go get go test github.com/schul-cloud/arix-search-adapter
+go get github.com/schul-cloud/arix-search-adapter
 ```
 
 Test this code
