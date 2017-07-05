@@ -151,13 +151,18 @@ func main() {
   fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, BASE)
   http.HandleFunc(BASE, func(w http.ResponseWriter, r *http.Request) {
     /* parse the query */
+    w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
     query := r.FormValue("Q")  /* https://godoc.org/net/http#Request.FormValue */
     if (query == "" || strings.Count(r.URL.RawQuery, "=") != 1) {
       /* The request is invalid. */
+      w.WriteHeader(400)
       search_response := NewWrongArgumentsResponse()
       result, _ := json.MarshalIndent(search_response, "", "  ")
       io.WriteString(w, string(result))
       io.WriteString(w, "\r\n")
+      fmt.Printf("Invalid Parameters %s?%s 400\r\n",
+                 r.URL.Path,
+                 r.URL.RawQuery)
     } else {
       /* request content from anatares 
        *
@@ -176,8 +181,7 @@ func main() {
       arix_response, _ := client.Do(arix_search_request)
       found_resources := arix.ParseSearchResult(arix_response.Body)
       search_response := NewSuccessfulSearchResponse(r.URL.Path, SEARCH_LIMIT, 0, found_resources)
-      
-      w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
+
       result, _ := json.MarshalIndent(search_response, "", "  ")
       io.WriteString(w, string(result))
       io.WriteString(w, "\r\n")
