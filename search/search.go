@@ -10,7 +10,6 @@ package main
 import (
   "fmt"
   "net/http"
-  "html"
   "log"
   "github.com/schul-cloud/arix-search-adapter/arix"
   "bytes"
@@ -99,7 +98,8 @@ func NewSuccessfulSearchResponse(self string, limit int, offset int, resources [
       Meta: JsonapiMeta{
         Name: "arix-search-adapter",
         Source: "https://github.com/schul-cloud/arix-search-adapter",
-        Description: "This is a search adapter for Antares.",
+        Description: fmt.Sprintf("This is a search adapter for Antares connected to %s.",
+                                 SERVER),
       },
     },
     Links: Links{
@@ -121,7 +121,7 @@ func main() {
   fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, BASE)
   http.HandleFunc(BASE, func(w http.ResponseWriter, r *http.Request) {
     /* parse the query */
-    query := r.FormValue("q")  /* https://godoc.org/net/http#Request.FormValue */
+    query := r.FormValue("Q")  /* https://godoc.org/net/http#Request.FormValue */
     /* request content from anatares 
      *
      *  https://stackoverflow.com/a/19253970/1320237
@@ -143,7 +143,11 @@ func main() {
     w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
     result, _ := json.MarshalIndent(search_response, "", "  ")
     io.WriteString(w, string(result))
-    fmt.Printf("Hello, %q \r\n %s:\r\n %s", html.EscapeString(r.URL.Path), arix_response.StatusCode, found_resources)
+    io.WriteString(w, "\r\n")
+    fmt.Printf("Searching %s?%s -> Arix (%d)\r\n",
+               r.URL.Path,
+               r.URL.RawQuery,
+               arix_response.StatusCode)
   })
 
   log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil))
