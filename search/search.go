@@ -180,7 +180,13 @@ func main() {
       
       arix_response, _ := client.Do(arix_search_request)
       found_resources := arix.ParseSearchResult(arix_response.Body)
-      search_response := NewSuccessfulSearchResponse(r.URL.Path, SEARCH_LIMIT, 0, found_resources)
+      self_url := strings.Join([]string{
+        "http://",
+        r.Host,
+        r.URL.String(),
+        }, "")
+      search_response := NewSuccessfulSearchResponse(
+        self_url, SEARCH_LIMIT, 0, found_resources)
 
       result, _ := json.MarshalIndent(search_response, "", "  ")
       io.WriteString(w, string(result))
