@@ -12,9 +12,9 @@ import (
   "net/http"
   "log"
   "github.com/schul-cloud/arix-search-adapter/arix"
-  "bytes"
-  "strconv"
-  "net/url"
+  //"bytes"
+  //"strconv"
+  //"net/url"
   "encoding/json"
   "io"
   "strings"
@@ -105,6 +105,19 @@ func NewWrongArgumentsResponse() ErrorSearchResponse {
   }
 }
 
+func NewInacceptableContentTypeResponse() ErrorSearchResponse {
+  return ErrorSearchResponse{
+    Jsonapi: NewJsonapi(),
+    Errors: []HTTPError{
+      HTTPError{
+        Title: "Not Acceptable",
+        Status: "406",
+        Detail: "The content type \"application/vnd.api+json\" must be accepted.",
+      },
+    },
+  }
+}
+
 func NewJsonapi() Jsonapi {
   return Jsonapi{
       Version: "1.0",
@@ -147,12 +160,31 @@ func NewSuccessfulSearchResponse(self string, limit int, offset int, resources [
 }
 
 
+/*
+ * Return whether the content type accepted by the client is
+ * application/vnd.api+json
+ *
+ * TODO: write this shorter with split and contains
+ */
+func RequestIsAcceptable(accepted string) bool {
+  accepted_list := strings.Split(accepted, ",")
+  for _, content_type := range accepted_list {
+    if (content_type == "*/*" || content_type == "application/*" ||
+        content_type == "application/vnd.api+json") {
+      return true
+    }
+  }
+  return false
+}
+
+
 func main() {
   fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, BASE)
   http.HandleFunc(BASE, func(w http.ResponseWriter, r *http.Request) {
     /* parse the query */
     w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
     query := r.FormValue("Q")  /* https://godoc.org/net/http#Request.FormValue */
+    accpepted_content_types := r.Header.Get("Accept")
     if (query == "" || strings.Count(r.URL.RawQuery, "=") != 1) {
       /* The request is invalid. */
       w.WriteHeader(400)
@@ -163,11 +195,24 @@ func main() {
       fmt.Printf("Invalid Parameters %s?%s 400\r\n",
                  r.URL.Path,
                  r.URL.RawQuery)
+    } else if (!RequestIsAcceptable(accpepted_content_types)) {
+      /* The request can not be fulfilled with this encoding. */
+      w.WriteHeader(406)
+      search_response := NewInacceptableContentTypeResponse()
+      result, _ := json.MarshalIndent(search_response, "", "  ")
+      io.WriteString(w, string(result))
+      io.WriteString(w, "\r\n")
+      fmt.Printf("Invalid Accept Header %s?%s \"%s\" 406\r\n",
+                 r.URL.Path,
+                 r.URL.RawQuery,
+                 accpepted_content_types)
     } else {
       /* request content from anatares 
        *
        *  https://stackoverflow.com/a/19253970/1320237
        */
+      status_code := 999
+      /*
       data := url.Values{}
       data.Set("context", CONTEXT)
       data.Set("xmlstatement", arix.GetSearchRequest(SEARCH_LIMIT, query))
@@ -180,13 +225,20 @@ func main() {
       
       arix_response, _ := client.Do(arix_search_request)
       found_resources := arix.ParseSearchResult(arix_response.Body)
+      status_code := arix_response.StatusCode
+        /**/
+      
+      /*
+       * Create the converted search result.
+       */
       self_url := strings.Join([]string{
         "http://",
         r.Host,
         r.URL.String(),
-        }, "")
+        }, "") 
+
       search_response := NewSuccessfulSearchResponse(
-        self_url, SEARCH_LIMIT, 0, found_resources)
+        self_url, SEARCH_LIMIT, 0, []arix.LearningResource{})
 
       result, _ := json.MarshalIndent(search_response, "", "  ")
       io.WriteString(w, string(result))
@@ -194,7 +246,7 @@ func main() {
       fmt.Printf("Searching %s?%s -> Arix (%d)\r\n",
                  r.URL.Path,
                  r.URL.RawQuery,
-                 arix_response.StatusCode)
+                 status_code)
     }
   })
 
