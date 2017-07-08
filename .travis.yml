@@ -14,7 +14,7 @@ before_install:
   - go get -u -t ./...
   - python -V
   - pip -V
-  - pip install schul_cloud_search_tests==1.0.60
+  - pip install schul_cloud_search_tests==1.0.61
 
 script:
   - go test ./arix
