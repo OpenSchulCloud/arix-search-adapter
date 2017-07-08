@@ -12,9 +12,9 @@ addons: # from https://stackoverflow.com/a/42572479/1320237
 
 before_install:
   - go get -u -t ./...
-  - python -V
-  - pip -V
-  - pip install schul_cloud_search_tests==1.0.61
+  - python3 -V
+  - pip3 -V
+  - pip3 install schul_cloud_search_tests==1.0.61
 
 script:
   - go test ./arix
