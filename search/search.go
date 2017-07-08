@@ -212,7 +212,7 @@ func main() {
        *  https://stackoverflow.com/a/19253970/1320237
        */
       status_code := 999
-      /*
+      ///*
       data := url.Values{}
       data.Set("context", CONTEXT)
       data.Set("xmlstatement", arix.GetSearchRequest(SEARCH_LIMIT, query))
