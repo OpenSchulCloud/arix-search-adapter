@@ -12,12 +12,14 @@ import (
   "net/http"
   "log"
   "github.com/schul-cloud/arix-search-adapter/arix"
-  //"bytes"
-  //"strconv"
-  //"net/url"
+  "bytes"
+  "strconv"
+  "net/url"
   "encoding/json"
   "io"
   "strings"
+  "os"
+  "path"
 )
 
 
@@ -27,6 +29,9 @@ const SERVER = "http://arix.datenbank-bildungsmedien.net/"
 const CONTEXT = "HH"
 const SEARCH_LIMIT = 10
 const SERVER_ID = "ARIX"
+
+const CODE_ENDPOINT = "/code"
+const CODE_DIR = "github.com/schul-cloud/arix-search-adapter/"
 
 /*
  * See the example https://github.com/schul-cloud/resources-api-v1/blob/master/schemas/search-response/examples/valid/five-fictive-resources-null-links.json
@@ -211,8 +216,7 @@ func main() {
        *
        *  https://stackoverflow.com/a/19253970/1320237
        */
-      status_code := 999
-      ///*
+      //status_code := 999 /*
       data := url.Values{}
       data.Set("context", CONTEXT)
       data.Set("xmlstatement", arix.GetSearchRequest(SEARCH_LIMIT, query))
@@ -238,7 +242,7 @@ func main() {
         }, "") 
 
       search_response := NewSuccessfulSearchResponse(
-        self_url, SEARCH_LIMIT, 0, []arix.LearningResource{})
+        self_url, SEARCH_LIMIT, 0, found_resources)
 
       result, _ := json.MarshalIndent(search_response, "", "  ")
       io.WriteString(w, string(result))
@@ -249,6 +253,19 @@ func main() {
                  status_code)
     }
   })
+  
+  /*
+   * Serve the code at CODE_ENDPOINT.
+   * see 
+   * - https://stackoverflow.com/a/26563418/1320237
+   * - https://gobyexample.com/environment-variables
+   */
+  gopath := os.Getenv("GOPATH")
+  if (gopath != "") {
+    code := path.Join(gopath, "src", CODE_DIR)
+    http.Handle("/code/", http.StripPrefix("/code/", http.FileServer(http.Dir(code))))
+    fmt.Printf("Serving code from %s at /code/\n", code)
+  }
 
   log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil))
 }
