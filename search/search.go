@@ -157,7 +157,7 @@ func RespondWithError(status int, response ErrorSearchResponse, w http.ResponseW
   result, _ := json.MarshalIndent(response, "", "  ")
   io.WriteString(w, string(result))
   io.WriteString(w, "\r\n")
-  fmt.Printf("%i %s: %s?%s -> %s\r\n",
+  fmt.Printf("%d %s: %s?%s -> %s\r\n",
              status,
              response.Errors[0].Title,
              r.URL.Path,
