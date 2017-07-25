@@ -44,9 +44,10 @@ type LinkRequest struct {
  * - https://siongui.github.io/2015/02/17/go-parse-xml-example-1/
  * 
  */
-func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
+func NotchToLinkRequest(notch_response io.Reader, secret string) LinkRequest {
   notch := Notch{}
-  err := xml.Unmarshal(notch_response, &notch)
+  decoder := xml.NewDecoder(notch_response)
+  err := decoder.Decode(&notch)
 	if err != nil {
 		fmt.Printf("error: %v", err)
 		return LinkRequest{notch:notch, secret:[]byte(secret)}
@@ -54,6 +55,11 @@ func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
   //fmt.Printf("notch: %#v <- %s\n", notch, notch_response)
 	return LinkRequest{notch:notch, secret:[]byte(secret)}
 }
+func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
+  return NotchToLinkRequest(bytes.NewReader(notch_response), secret)
+}
+
+
 
 func (link_request LinkRequest) String() string {
   h := md5.New()
