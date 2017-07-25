@@ -24,7 +24,8 @@ import (
 
 
 const PORT = 8080
-const BASE = "/v1/search"
+const SEARCH_BASE = "/v1/search"
+const URL_BASE = "/v1/url/"
 const SERVER = "http://arix.datenbank-bildungsmedien.net/"
 const CONTEXT = "HH"
 const SEARCH_LIMIT = 10
@@ -97,9 +98,9 @@ type HTTPError struct {
   Detail       string  `json:"detail"`
 }
 
-func NewWrongArgumentsResponse() ErrorSearchResponse {
+func NewWrongArgumentsResponse(host string) ErrorSearchResponse {
   return ErrorSearchResponse{
-    Jsonapi: NewJsonapi(),
+    Jsonapi: NewJsonapi(host),
     Errors: []HTTPError{
       HTTPError{
         Title: "Bad Request",
@@ -110,25 +111,40 @@ func NewWrongArgumentsResponse() ErrorSearchResponse {
   }
 }
 
-func NewInacceptableContentTypeResponse() ErrorSearchResponse {
+func NewServerErrorResponse(host string, message string) ErrorSearchResponse {
   return ErrorSearchResponse{
-    Jsonapi: NewJsonapi(),
+    Jsonapi: NewJsonapi(host),
     Errors: []HTTPError{
       HTTPError{
-        Title: "Not Acceptable",
-        Status: "406",
-        Detail: "The content type \"application/vnd.api+json\" must be accepted.",
+        Title: "Internal Server Error",
+        Status: "500",
+        Detail: message,
       },
     },
   }
 }
 
-func NewJsonapi() Jsonapi {
+
+
+func NewInacceptableContentTypeResponse(host string, accepted_content_type string) ErrorSearchResponse {
+  return ErrorSearchResponse{
+    Jsonapi: NewJsonapi(host),
+    Errors: []HTTPError{
+      HTTPError{
+        Title: "Not Acceptable",
+        Status: "406",
+        Detail: fmt.Sprintf("The content type \"application/vnd.api+json\" must be accepted. It is not listed in \"%s\".", accepted_content_type),
+      },
+    },
+  }
+}
+
+func NewJsonapi(host string) Jsonapi {
   return Jsonapi{
       Version: "1.0",
       Meta: JsonapiMeta{
         Name: "arix-search-adapter",
-        Source: "https://github.com/schul-cloud/arix-search-adapter",
+        Source: fmt.Sprintf("http://%s%s", host, CODE_ENDPOINT),
         Description: fmt.Sprintf(
           "This is a search adapter for Antares connected to %s.",
           SERVER),
@@ -136,9 +152,34 @@ func NewJsonapi() Jsonapi {
    }
 }
 
-func NewSuccessfulSearchResponse(self string, limit int, offset int, resources []arix.LearningResource) SuccessfulSearchResponse {
+func RespondWithError(status int, response ErrorSearchResponse, w http.ResponseWriter, r *http.Request) {
+  w.WriteHeader(status)
+  result, _ := json.MarshalIndent(response, "", "  ")
+  io.WriteString(w, string(result))
+  io.WriteString(w, "\r\n")
+  fmt.Printf("%i %s: %s?%s -> %s\r\n",
+             status,
+             response.Errors[0].Title,
+             r.URL.Path,
+             r.URL.RawQuery,
+             response.Errors[0].Detail)
+}
+
+func NewSuccessfulSearchResponse(host string, request_url string, limit int, offset int, resources []arix.LearningResource) SuccessfulSearchResponse {
+  self_url := strings.Join([]string{
+    "http://",
+    host,
+    request_url,
+    }, "") 
   var data = []ResourceData{}
   for _, resource := range resources {
+    /*data_url := strings.Join([]string{
+      "http://",
+      host,
+      URL_BASE,
+      resource.Id,
+      }, "")
+    //resource.Url = data_url*/
     data = append(data, ResourceData{
       Type: "resource",
       Id: fmt.Sprintf("%s-%s", SERVER_ID, resource.Id),
@@ -149,10 +190,10 @@ func NewSuccessfulSearchResponse(self string, limit int, offset int, resources [
     })
   }
   return SuccessfulSearchResponse{
-    Jsonapi: NewJsonapi(),
+    Jsonapi: NewJsonapi(host),
     Links: Links{
       Self: SelfLink{
-        Href: self,
+        Href: self_url,
         Meta: SelfLinkMeta{
           Count: len(resources),
           Offset: offset,
@@ -184,33 +225,18 @@ func RequestIsAcceptable(accepted string) bool {
 
 
 func main() {
-  fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, BASE)
-  http.HandleFunc(BASE, func(w http.ResponseWriter, r *http.Request) {
+  fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, SEARCH_BASE)
+  http.HandleFunc(SEARCH_BASE, func(w http.ResponseWriter, r *http.Request) {
     /* parse the query */
     w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
     query := r.FormValue("Q")  /* https://godoc.org/net/http#Request.FormValue */
     accpepted_content_types := r.Header.Get("Accept")
     if (query == "" || strings.Count(r.URL.RawQuery, "=") != 1) {
       /* The request is invalid. */
-      w.WriteHeader(400)
-      search_response := NewWrongArgumentsResponse()
-      result, _ := json.MarshalIndent(search_response, "", "  ")
-      io.WriteString(w, string(result))
-      io.WriteString(w, "\r\n")
-      fmt.Printf("Invalid Parameters %s?%s 400\r\n",
-                 r.URL.Path,
-                 r.URL.RawQuery)
+      RespondWithError(400, NewWrongArgumentsResponse(r.Host), w, r)
     } else if (!RequestIsAcceptable(accpepted_content_types)) {
       /* The request can not be fulfilled with this encoding. */
-      w.WriteHeader(406)
-      search_response := NewInacceptableContentTypeResponse()
-      result, _ := json.MarshalIndent(search_response, "", "  ")
-      io.WriteString(w, string(result))
-      io.WriteString(w, "\r\n")
-      fmt.Printf("Invalid Accept Header %s?%s \"%s\" 406\r\n",
-                 r.URL.Path,
-                 r.URL.RawQuery,
-                 accpepted_content_types)
+      RespondWithError(406, NewInacceptableContentTypeResponse(r.Host, accpepted_content_types), w, r)
     } else {
       /* request content from anatares 
        *
@@ -227,30 +253,30 @@ func main() {
       arix_search_request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
       arix_search_request.Header.Add("Content-Length", strconv.Itoa(len(encoded_data)))
       
-      arix_response, _ := client.Do(arix_search_request)
-      found_resources := arix.ParseSearchResult(arix_response.Body)
-      status_code := arix_response.StatusCode
-        /**/
-      
-      /*
-       * Create the converted search result.
-       */
-      self_url := strings.Join([]string{
-        "http://",
-        r.Host,
-        r.URL.String(),
-        }, "") 
+      arix_response, error := client.Do(arix_search_request)
+      if (error != nil) {
+        RespondWithError(406, NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
+      } else {
+        body := arix_response.Body
+        found_resources := arix.ParseSearchResult(body)
+        status_code := arix_response.StatusCode
+          /**/
+        
+        /*
+         * Create the converted search result.
+         */
 
-      search_response := NewSuccessfulSearchResponse(
-        self_url, SEARCH_LIMIT, 0, found_resources)
+        search_response := NewSuccessfulSearchResponse(
+          r.Host, r.URL.String(), SEARCH_LIMIT, 0, found_resources)
 
-      result, _ := json.MarshalIndent(search_response, "", "  ")
-      io.WriteString(w, string(result))
-      io.WriteString(w, "\r\n")
-      fmt.Printf("Searching %s?%s -> Arix (%d)\r\n",
-                 r.URL.Path,
-                 r.URL.RawQuery,
-                 status_code)
+        result, _ := json.MarshalIndent(search_response, "", "  ")
+        io.WriteString(w, string(result))
+        io.WriteString(w, "\r\n")
+        fmt.Printf("Searching %s?%s -> Arix (%d)\r\n",
+                   r.URL.Path,
+                   r.URL.RawQuery,
+                   status_code)
+      }
     }
   })
   
