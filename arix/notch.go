@@ -81,7 +81,8 @@ type ResponseLink struct {
 }
 
 type ResponseLinkCollection struct {
-  Links  []ResponseLink `xml:"a"`
+  Error  string `xml:",innerxml"`
+  Links  []ResponseLink  `xml:"a"`
 }
 
 func GetLinksFromLinkResponse(link_response io.Reader) map[string]string {
@@ -95,6 +96,9 @@ func GetLinksFromLinkResponse(link_response io.Reader) map[string]string {
 	}
 	for _, link := range links.Links {
 	  mapping[link.Name] = link.Href
+	}
+	if (len(links.Links) == 0) {
+	  mapping["error"] = links.Error
 	}
   return mapping
 }

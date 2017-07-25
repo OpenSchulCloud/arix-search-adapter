@@ -284,9 +284,12 @@ func main() {
       RespondWithError(NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
       return
     }
-    links := arix.GetLinksFromLinkResponse(link_response)
-    fmt.Printf("Link: %s", links["download"])
-    //io.Copy(w, link_response.Body)
+    links := arix.GetLinksFromLinkResponse(link_response.Body)
+ //   link := links["download"]
+    if (links["error"] != "") {
+      RespondWithError(NewServerErrorResponse(r.Host, links["error"]), w, r)
+      return
+    }
   })
   
   /*

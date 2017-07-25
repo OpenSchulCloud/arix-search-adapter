@@ -4,6 +4,7 @@ import (
   "testing"
   "github.com/stretchr/testify/assert"
   "strings"
+//  "fmt"
 )
 
 
@@ -29,9 +30,16 @@ func TestExtractLinks(t *testing.T) {
 	      "download": "http://xplay.datenbank-bildungsmedien.net/151d1d77f1126fad9b32fd8b6a218095/SF-56395-download/10_Dinge-die_du_wissen_musst-Albert_Einstein-HD.mp4",
 	      "direct": "http://xplay.datenbank-bildungsmedien.net/151d1d77f1126fad9b32fd8b6a218095/SF-56395-cnv_mp4_a/10_Dinge-die_du_wissen_musst-Albert_Einstein-HD.mp4",
 	    },
+	  }, {
+	    " <error>Wrong passphrase for141.89.226.149</error>",
+	    map[string]string{
+	      "error": "Wrong passphrase for141.89.226.149",
+	    },
     },
 	} {
 		got := GetLinksFromLinkResponse(strings.NewReader(c.response))
 		assert.Equal(t, c.links, got)
+//		fmt.Printf("test: %v", got)
+//		assert.Equal(t, 1, 2)
 	}
 }
