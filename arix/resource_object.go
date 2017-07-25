@@ -14,14 +14,14 @@ type License struct {
 }
 
 type LearningResource struct {
-  Id               string
-  Title            string
-  Description      string
-  Url              string
-  Licenses         []License
-  MimeType         string
-  ContentCategory  string
-  Languages        []string
-  Thumbnail        string
+  Id               string    `json:"id"`
+  Title            string    `json:"title"`
+  Description      string    `json:"description"`
+  Url              string    `json:"url"`
+  Licenses         []License `json:"licenses"`
+  MimeType         string    `json:"mimeType"`
+  ContentCategory  string    `json:"contentCategory"`
+  Languages        []string  `json:"languages"`
+  Thumbnail        string    `json:"thumbnail"`
 }
 
