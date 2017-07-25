@@ -55,7 +55,12 @@ Here you see the environment variables with their explanation:
   This is the search context. This influences wich search results can be found.
 - `ARIX_SEARCH_SECRET` defaults to `` (not set)  
   This is the secret to verify that the user has the license for the material which is requested.
-
+- `ARIX_SEARCH_PORT` defaults to `8080`  
+  This is the port the search server listens on.
+- `ARIX_SEARCH_LIMIT` defaults to `10`  
+  This is the maximum number of resources to request.
+- `ARIX_SEARCH_SERVER_ID` defaults to `ARIX`  
+  This is the id of the arix server. This can be used if you use mutiple servers to identify the resources.
 
 [setup-windows]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
 [setup-ubuntu]: https://wiki.ubuntu.com/Go
