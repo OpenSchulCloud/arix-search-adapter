@@ -11,6 +11,7 @@ import (
   "crypto/md5"
   "encoding/hex"
   "bytes"
+  "io"
 )
 
 
@@ -44,7 +45,7 @@ type LinkRequest struct {
  * - https://siongui.github.io/2015/02/17/go-parse-xml-example-1/
  * 
  */
-func NotchToLinkRequest(notch_response io.Reader, secret string) LinkRequest {
+func NotchReaderToLinkRequest(notch_response io.Reader, secret string) LinkRequest {
   notch := Notch{}
   decoder := xml.NewDecoder(notch_response)
   err := decoder.Decode(&notch)
@@ -56,7 +57,7 @@ func NotchToLinkRequest(notch_response io.Reader, secret string) LinkRequest {
 	return LinkRequest{notch:notch, secret:[]byte(secret)}
 }
 func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
-  return NotchToLinkRequest(bytes.NewReader(notch_response), secret)
+  return NotchReaderToLinkRequest(bytes.NewReader(notch_response), secret)
 }
 
 

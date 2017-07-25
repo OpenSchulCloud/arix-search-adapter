@@ -274,9 +274,18 @@ func main() {
     resource_id := r.URL.String()[len(Config().Endpoints.Url):]
     notch_request := arix.GetNotchRequest(resource_id)
     notch_response, error := ArixRequest(notch_request)
-    link_request := arix.NotchToLinkRequest(notch_response.Body, Config().Secret)
+    if (error != nil) {
+      RespondWithError(NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
+      return
+    }
+    link_request := arix.NotchReaderToLinkRequest(notch_response.Body, Config().Secret)
     link_response, error := ArixRequest(link_request.String())
-    fmt.Printf("url: %s\n\n", link_response.Body)
+    if (error != nil) {
+      RespondWithError(NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
+      return
+    }
+    fmt.Printf("url: %v\n\n", link_response.Body)
+    io.Copy(w, link_response.Body)
   })
   
   /*
