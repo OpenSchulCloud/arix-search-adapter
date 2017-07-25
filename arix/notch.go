@@ -13,6 +13,11 @@ import (
   "bytes"
 )
 
+
+func GetNotchRequest(resource_id string) string {
+  return fmt.Sprintf("<notch identifier=\"%s\" />", resource_id)
+}
+
 /* A parsed XML notch
  * Example:
  * - "<notch id=\"1111111b8b2f3bb370e0b75405aaaaaa\">11111111111111111111111aaaaaaaaa</notch>"

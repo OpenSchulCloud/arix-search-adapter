@@ -12,9 +12,7 @@ import (
   "net/http"
   "log"
   "github.com/schul-cloud/arix-search-adapter/arix"
-  "bytes"
   "strconv"
-  "net/url"
   "encoding/json"
   "io"
   "strings"
@@ -24,8 +22,8 @@ import (
 
 
 const PORT = 8080
-const SEARCH_BASE = "/v1/search"
-const URL_BASE = "/v1/url/"
+const SEARCH_ENDPOINT = "/v1/search"
+const URL_ENDPOINT = "/v1/url/"
 const SERVER = "http://arix.datenbank-bildungsmedien.net/"
 const CONTEXT = "HH"
 const SEARCH_LIMIT = 10
@@ -176,7 +174,7 @@ func NewSuccessfulSearchResponse(host string, request_url string, limit int, off
     data_url := strings.Join([]string{
       "http://",
       host,
-      URL_BASE,
+      URL_ENDPOINT,
       resource.Id,
       }, "")
     resource.Url = data_url
@@ -222,8 +220,15 @@ func RequestIsAcceptable(accepted string) bool {
 
 
 func main() {
-  fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, SEARCH_BASE)
-  http.HandleFunc(SEARCH_BASE, func(w http.ResponseWriter, r *http.Request) {
+  fmt.Printf("Server is starting on port http://localhost:%d%s\n", PORT, SEARCH_ENDPOINT)
+  
+  /*
+   * Serve the search at SEARCH_ENDPOINT.
+   * 
+   * This requests the ARIX endpoint.
+   */
+  
+  http.HandleFunc(SEARCH_ENDPOINT, func(w http.ResponseWriter, r *http.Request) {
     /* parse the query */
     w.Header().Set("Content-Type", "application/vnd.api+json") // from https://gist.github.com/tristanwietsma/8444cf3cb5a1ac496203#file-routes-go-L26
     query := r.FormValue("Q")  /* https://godoc.org/net/http#Request.FormValue */
@@ -237,32 +242,19 @@ func main() {
     } else {
       /* request content from anatares 
        *
-       *  https://stackoverflow.com/a/19253970/1320237
        */
-      //status_code := 999 /*
-      data := url.Values{}
-      data.Set("context", CONTEXT)
-      data.Set("xmlstatement", arix.GetSearchRequest(SEARCH_LIMIT, query))
-      encoded_data := data.Encode()
-
-      client := &http.Client{}
-      arix_search_request, _ := http.NewRequest("POST", SERVER, bytes.NewBufferString(encoded_data))
-      arix_search_request.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-      arix_search_request.Header.Add("Content-Length", strconv.Itoa(len(encoded_data)))
+      arix_response, error := arix.Request(SERVER, CONTEXT, arix.GetSearchRequest(SEARCH_LIMIT, query))
       
-      arix_response, error := client.Do(arix_search_request)
       if (error != nil) {
+        // e.g. timeout
         RespondWithError(NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
       } else {
         body := arix_response.Body
         found_resources := arix.ParseSearchResult(body)
         status_code := arix_response.StatusCode
-          /**/
-        
         /*
          * Create the converted search result.
          */
-
         search_response := NewSuccessfulSearchResponse(
           r.Host, r.URL.String(), SEARCH_LIMIT, 0, found_resources)
 
@@ -275,6 +267,21 @@ func main() {
                    status_code)
       }
     }
+  })
+  
+  /*
+   * Serve the urls at URL_ENDPOINT.
+   * 
+   * They allow getting the actual data.
+   */
+  
+  http.HandleFunc(URL_ENDPOINT, func(w http.ResponseWriter, r *http.Request) {
+    resource_id := r.URL.String()[len(URL_ENDPOINT):]
+    notch_request := arix.GetNotchRequest(resource_id)
+    notch_response, error := arix.Request(SERVER, CONTEXT, notch_request)
+    link_request := arix.NotchToLinkRequest(notch_response.Body)
+    link_response, error := arix.Request(SERVER, CONTEXT, link_request)
+    fmt.Printf("url: %s\n\n", link_response.Body)
   })
   
   /*
