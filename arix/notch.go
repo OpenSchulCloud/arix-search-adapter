@@ -60,8 +60,6 @@ func NotchToLinkRequest(notch_response []byte, secret string) LinkRequest {
   return NotchReaderToLinkRequest(bytes.NewReader(notch_response), secret)
 }
 
-
-
 func (link_request LinkRequest) String() string {
   h := md5.New()
   h.Write(link_request.notch.Challenge)
@@ -76,3 +74,27 @@ func (link_request LinkRequest) String() string {
   return buffer.String()
 }
 
+
+type ResponseLink struct {
+  Href string `xml:"href,attr"`
+  Name string `xml:",innerxml"`
+}
+
+type ResponseLinkCollection struct {
+  Links  []ResponseLink `xml:"a"`
+}
+
+func GetLinksFromLinkResponse(link_response io.Reader) map[string]string {
+  links := ResponseLinkCollection{}
+  decoder := xml.NewDecoder(link_response)
+  err := decoder.Decode(&links)
+  mapping := map[string]string{}
+	if err != nil {
+		fmt.Printf("error: %v", err)
+		return mapping
+	}
+	for _, link := range links.Links {
+	  mapping[link.Name] = link.Href
+	}
+  return mapping
+}
