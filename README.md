@@ -31,8 +31,18 @@ go test github.com/schul-cloud/arix-search-adapter/arix
 
 Run the search engine server
 ```
-go build github.com/schul-cloud/arix-search-adapter/search && search
+go build github.com/schul-cloud/arix-search-adapter/search && ./search
 ```
+
+Try it out
+----------
+
+After Setup, you can run this command to request a search:
+
+```
+curl -i 'http://localhost:8080/v1/search?Q=Einstein'
+```
+
 
 
 [setup-windows]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
