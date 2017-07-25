@@ -84,7 +84,6 @@ type NullLink struct {
 type ResourceData struct {
   Type         string                 `json:"type"`
   Id           string                 `json:"id"`
-  Links        ResourceLinks          `json:"links"`
   Attributes   arix.LearningResource  `json:"attributes"`
 }
 
@@ -152,7 +151,8 @@ func NewJsonapi(host string) Jsonapi {
    }
 }
 
-func RespondWithError(status int, response ErrorSearchResponse, w http.ResponseWriter, r *http.Request) {
+func RespondWithError(response ErrorSearchResponse, w http.ResponseWriter, r *http.Request) {
+  status, _ := strconv.Atoi(response.Errors[0].Status)
   w.WriteHeader(status)
   result, _ := json.MarshalIndent(response, "", "  ")
   io.WriteString(w, string(result))
@@ -173,19 +173,16 @@ func NewSuccessfulSearchResponse(host string, request_url string, limit int, off
     }, "") 
   var data = []ResourceData{}
   for _, resource := range resources {
-    /*data_url := strings.Join([]string{
+    data_url := strings.Join([]string{
       "http://",
       host,
       URL_BASE,
       resource.Id,
       }, "")
-    //resource.Url = data_url*/
+    resource.Url = data_url
     data = append(data, ResourceData{
       Type: "resource",
       Id: fmt.Sprintf("%s-%s", SERVER_ID, resource.Id),
-      Links: ResourceLinks{
-        Self: "TODO",
-      },
       Attributes: resource,
     })
   }
@@ -233,10 +230,10 @@ func main() {
     accpepted_content_types := r.Header.Get("Accept")
     if (query == "" || strings.Count(r.URL.RawQuery, "=") != 1) {
       /* The request is invalid. */
-      RespondWithError(400, NewWrongArgumentsResponse(r.Host), w, r)
+      RespondWithError(NewWrongArgumentsResponse(r.Host), w, r)
     } else if (!RequestIsAcceptable(accpepted_content_types)) {
       /* The request can not be fulfilled with this encoding. */
-      RespondWithError(406, NewInacceptableContentTypeResponse(r.Host, accpepted_content_types), w, r)
+      RespondWithError(NewInacceptableContentTypeResponse(r.Host, accpepted_content_types), w, r)
     } else {
       /* request content from anatares 
        *
@@ -255,7 +252,7 @@ func main() {
       
       arix_response, error := client.Do(arix_search_request)
       if (error != nil) {
-        RespondWithError(406, NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
+        RespondWithError(NewServerErrorResponse(r.Host, fmt.Sprintf("%s", error)), w, r)
       } else {
         body := arix_response.Body
         found_resources := arix.ParseSearchResult(body)
