@@ -4,8 +4,7 @@
  */
 package main
 
-import (
-    "github.com/schul-cloud/arix-search-adapter/search"
+import . "search"
 )
 
 func main() {
