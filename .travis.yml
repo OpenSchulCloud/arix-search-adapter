@@ -17,7 +17,7 @@ before_install:
   - source .venv/bin/activate
   - python -V
   - pip -V
-  - pip install schul_cloud_search_tests==1.0.61
+  - pip install schul_cloud_search_tests==1.0.68
 
 script:
   - go test ./arix
