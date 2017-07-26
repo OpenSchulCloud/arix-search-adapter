@@ -5,7 +5,7 @@
  *
  */
 
-package main
+package search
 
 import (
   "fmt"
@@ -198,7 +198,7 @@ func ArixRequest(request string) (*http.Response, error) {
 }
 
 
-func main() {
+func Run() {
   
   fmt.Printf("Server is starting on port http://localhost:%d%s\n", Config().Port, Config().Endpoints.Search)  
   

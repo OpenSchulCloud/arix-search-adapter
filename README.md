@@ -31,7 +31,7 @@ go test github.com/schul-cloud/arix-search-adapter/arix
 
 Run the search engine server
 ```
-go build github.com/schul-cloud/arix-search-adapter/search && ./search
+go build github.com/schul-cloud/arix-search-adapter && ./arix-search-adapter
 ```
 
 Try it out
@@ -73,6 +73,12 @@ You can configure the server by running these commands:
   `export ARIX_SEARCH_SECRET=...`
 - Windows  
   `set ARIX_SEARCH_SECRET=...`
+
+Repository Layout
+-----------------
+
+The repository layout is inspired by [this blog post](https://npf.io/2016/10/reusable-commands/)
+
 
 [setup-windows]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
 [setup-ubuntu]: https://wiki.ubuntu.com/Go
