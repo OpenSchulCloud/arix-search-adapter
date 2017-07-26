@@ -61,6 +61,10 @@ Here you see the environment variables with their explanation:
   This is the maximum number of resources to request.
 - `ARIX_SEARCH_SERVER_ID` defaults to `ARIX`  
   This is the id of the arix server. This can be used if you use mutiple servers to identify the resources.
+- `ARIX_SEARCH_LINK_TYPE` defaults to `direct`  
+  This is the type of the resource link. These options are available:
+  - `direct` - Links show a media player or the resource in the users browser.
+  - `download` - Links make the browser download the content.
 
 [setup-windows]: http://www.wadewegner.com/2014/12/easy-go-programming-setup-for-windows/
 [setup-ubuntu]: https://wiki.ubuntu.com/Go

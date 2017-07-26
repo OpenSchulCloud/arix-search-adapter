@@ -86,41 +86,26 @@ type HTTPError struct {
 }
 
 func NewWrongArgumentsResponse(host string) ErrorSearchResponse {
-  return ErrorSearchResponse{
-    Jsonapi: NewJsonapi(host),
-    Errors: []HTTPError{
-      HTTPError{
-        Title: "Bad Request",
-        Status: "400",
-        Detail: "Only the query parameter Q is supported.",
-      },
-    },
-  }
+  return NewErrorResponse(host, 400, "Only the query parameter Q is supported.")
 }
 
 func NewServerErrorResponse(host string, message string) ErrorSearchResponse {
-  return ErrorSearchResponse{
-    Jsonapi: NewJsonapi(host),
-    Errors: []HTTPError{
-      HTTPError{
-        Title: "Internal Server Error",
-        Status: "500",
-        Detail: message,
-      },
-    },
-  }
+  return NewErrorResponse(host, 500, message)
 }
 
-
-
 func NewInacceptableContentTypeResponse(host string, accepted_content_type string) ErrorSearchResponse {
+  detail := fmt.Sprintf("The content type \"application/vnd.api+json\" must be accepted. It is not listed in \"%s\".", accepted_content_type)
+  return NewErrorResponse(host, 406, detail)
+}
+
+func NewErrorResponse(host string, status int, detail string) ErrorSearchResponse {
   return ErrorSearchResponse{
     Jsonapi: NewJsonapi(host),
     Errors: []HTTPError{
       HTTPError{
-        Title: "Not Acceptable",
-        Status: "406",
-        Detail: fmt.Sprintf("The content type \"application/vnd.api+json\" must be accepted. It is not listed in \"%s\".", accepted_content_type),
+        Title: ERROR_MAPPING[status],
+        Status: fmt.Sprintf("%d", status),
+        Detail: detail,
       },
     },
   }
@@ -285,11 +270,18 @@ func main() {
       return
     }
     links := arix.GetLinksFromLinkResponse(link_response.Body)
- //   link := links["download"]
     if (links["error"] != "") {
       RespondWithError(NewServerErrorResponse(r.Host, links["error"]), w, r)
       return
     }
+    link := links[Config().LinkType]
+    if (link == "") {
+      detail := fmt.Sprintf("No Download link found for resource with id \"%s\".", resource_id)
+      RespondWithError(NewErrorResponse(r.Host, 404, detail), w, r)
+      return
+    }
+    fmt.Printf("ID \"%s\" -> %s", resource_id, link)
+    http.Redirect(w, r, link, http.StatusFound)
   })
   
   /*
