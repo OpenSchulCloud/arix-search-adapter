@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>TESTINTERFACE</title>
+</head>
+<body>
+<font face='Arial'>
+<center>
+<form name='test' action='http://arix.datenbank-bildungsmedien.net/'  method='post' target='xml'>
+	<B>Context:</b>
+	<br />
+	<INPUT TYPE="TEXT" name='context' value='NRW' />
+	<br />
+	<br />
+	<B>Query:</b>
+	<br />
+	<TEXTAREA COLS=50 ROWS=10 name='xmlstatement'>
+	&lt;search fields='text,titel'>
+	&lt;condition field='text'>watt&lt;/condition>
+	&lt;/search>
+	</TEXTAREA>
+	<br />
+<INPUT TYPE="SUBMIT" value="TEST!">
+</form>
+<br />
+<br />
+<b>Test für einen Datensatzdownload:<br>
+<p>&lt;record identifier='SHPOOL-22580' /&gt;</p>
+<br />
+<br />
+<b>Suche in allen Textfeldern:<br>
+<p>
+&lt;search fields='text,titel'><br />
+&lt;condition field='text_fields'>watt&lt;/condition><br />
+&lt;/search>
+</p>
+<br />
+<br />
+<b>Suche in allen Titelfeldern:<br>
+<p>
+&lt;search fields='text,titel'><br />
+&lt;condition field='titel_fields'>watt&lt;/condition><br />
+&lt;/search>
+</p>
+<br />
+<br />
+<b>Suche nach ganzem WORT:<br>
+<p>
+&lt;search fields='text,titel'><br />
+&lt;condition field='titel_fields' option='WORD'>HUND&lt;/condition><br />
+&lt;/search>
+</p>
+<br />
+<br />
+<b>Suche nach Phrase:<br>
+<p>
+&lt;search fields='text,titel'><br />
+&lt;condition field='text_fields'>"Gregor Gysi"&lt;/condition><br />
+&lt;/search>
+</p>
+<br />
+<br />
+<b>Suche nach ODER:<br>
+<p>
+&lt;search fields='text,titel'><br />
+&lt;condition operator="OR" field='titel_fields'>Gregor Gysi&lt;/condition><br />
+&lt;/search>
+</p>
+<br />
+<br />
+<b>Login (Beispiel in Bad Homburg, Passwort ist md5 encodiert)<br />
+ACHTUNG: Kontext muss dann HE/30/030999 sein!:<br>
+<p>
+&lt;login<br />
+user_id='1'<br />
+password='900150983cd24fb0d6963f7d28e17f72'<br />
+/>
+</p>
+<br />
+<b>Fordere NOTCH an:<br />
+<p>
+&lt;notch<br />
+identifier='SHPOOL-22580'<br />
+/>
+</p>
+<br />
+<b>Fordere LINKS an:<br />
+ACHTUNG: Kontext muss bei Verwendung von tmp-Login-Daten derselbe wie beim Einloggen sein!<br>
+<p>
+&lt;LINK<br />
+id='id'<br />
+tmpuser='optional tmpuser'<br />
+>PASSPHRASE&lt;/link>
+</p>
+<br />
+&bull;
+</center>
+</font>
+</body>
+</html>
